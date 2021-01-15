@@ -10,7 +10,6 @@ app.use(express.json())
 
 app.post('/users', async (req, res) => {
     const user = new User(req.body)
-    //console.log(user)
 
     try{
         await user.save()
@@ -19,14 +18,34 @@ app.post('/users', async (req, res) => {
     catch (e) {
         res.status(400).send(e)
     }
+})
 
-    // user.save().then(() => {
-    //     res.status(201).send(user)
-    // }).catch((e) => {
-    //     res.status(400).send(e)
+// app.patch('users/:id', async (req, res) => {
+//     try{
+//         const user = await User.findByIdAndUpdate(req.params.id, req.body, { new : true, runValidators : true})
         
-    // })
+//         if(!user){
+//             return res.status(404).send()
+//         }
 
+//         res.send(user)
+//     }
+//     catch (e){
+//         res.status(400).send(e)
+//     }
+// })
+
+app.patch('/users/:id', async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators : true})
+        if(!user){
+            return res.status(404).send()
+        }
+
+        res.send(user)
+    } catch (e) {
+        res.status(400).send(e)
+    }
 })
 
 app.get('/users', async (req, res) => {
@@ -38,11 +57,7 @@ app.get('/users', async (req, res) => {
     catch (e){
         res.status(400).send(e)
     }
-    // User.find({}).then((users) => {
-    //     res.send(users)
-    // }).catch(() => {
-    //     res.status(500).send()
-    // })
+
 })
 
 app.get('/users/:id', async (req,res) => {
@@ -59,22 +74,10 @@ app.get('/users/:id', async (req,res) => {
         res.status(500).send()
     }
     console.log(req.params)
-
-    // User.findById(_id).then((user) => {
-    //     if(!user){
-    //         return res.status(404).send()
-    //     }
-
-    //     res.send(user)
-    // }).catch((e) => {
-    //     res.status(500).send()
-    // })
-    // console.log(req.params)
 })
 
 app.post('/tasks', async (req,res) => {
     const task = new Task(req.body)
-    //console.log(task)
 
     try{
         await task.save()
@@ -84,11 +87,21 @@ app.post('/tasks', async (req,res) => {
         res.status(400).send(e)
     }
 
-    // task.save().then(() => {
-    //     res.status(201).send(task)
-    // }).catch((e) => {
-    //     res.status(400).send(e)
-    // })
+})
+
+app.patch('/tasks/:id', async (req, res) => {
+    try{
+        const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new : true, runValidators : true})
+        
+        if(!task){
+            return res.status(404).send()
+        }
+
+        res.send(task)
+    }
+    catch (e){
+        res.status(400).send(e)
+    }
 })
 
 app.get('/tasks', async (req, res) => {
@@ -101,11 +114,6 @@ app.get('/tasks', async (req, res) => {
         res.status(500).send()
     }
 
-    // Task.find({}).then((tasks) => {
-    //     res.send(tasks)
-    // }).catch(() => {
-    //     res.status(500).send()
-    // })
 })
 
 
