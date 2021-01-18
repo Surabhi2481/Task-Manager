@@ -48,7 +48,7 @@ router.post('/users/login', async (req, res) => {
         if(!token){
             console.log('Token is empty')
         }
-        res.send({ user, token})
+        res.send({ user , token})
     } catch (e) {
         res.status(400).send(e)
     }
