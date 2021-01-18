@@ -28,6 +28,19 @@ app.listen(port, () => {
     console.log('Server is up on the port '+ port)
 })
 
+const Task = require('./models/task')
+const User = require('./models/user')
+const main = async () => { 
+    // const task = await Task.findById('6005c4c2fcda3a5ac462a35d')
+    // await task.populate('owner').execPopulate()
+    // console.log(task)
+
+    const user = await User.findById('6005c4a3fcda3a5ac462a35a')
+    await user.populate('tasks').execPopulate()
+    console.log(user.tasks)
+}
+main()
+
 //const bcrypt = require('bcryptjs')
 
 // const myFunction = async () => {
